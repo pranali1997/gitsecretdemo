@@ -27,7 +27,7 @@ spec:
     args:
     - infinity
   - name: gitsecretcontainer
-    image: izhar0407/git-secrets
+    image: ncpierson/git-secret
     command:
     - sleep
     args:
@@ -61,7 +61,8 @@ spec:
                   sh 'gpg --import-ownertrust ${PUBLIC_KEY}'
                   sh 'gpg --list-keys'
                   sh 'git secret reveal -p ${GPG_PASSPHRASE}'
-                  sh 'git secret cat postgresqlhelmsecret/secrets.yaml'
+                  sh 'ls'
+                  sh 'git secret cat  postgresqlgitsecret/secrets.yaml'
                 }
             }
         }
@@ -69,7 +70,7 @@ spec:
             steps {
                 container('helmcontainer'){
                     sh 'helm version'
-                    sh 'helm install postgresqldemo postgresqlhelmsecret --values postgresqlhelmsecret/secrets.yaml -n infra --kubeconfig=${KUBECONFIG}'
+                    sh 'helm install postgresqldemo  postgresqlgitsecret --values  postgresqlgitsecret/secrets.yaml -n infra --kubeconfig=${KUBECONFIG}'
                 }
             }
         }
